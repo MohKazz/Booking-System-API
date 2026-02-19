@@ -1,0 +1,39 @@
+{% extends "travel/base.html" %}
+
+{% block content %}
+<h2>All Bookings</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Destination</th>
+            <th>Passport Number</th>
+            <th>People</th>
+            <th>Phone Number</th>
+            <th>Email</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for b in bookings %}
+        <tr>
+            <td>{{ b.booking_id }}</td>
+            <td>{{ b.traveler_names }}</td>
+            <td>{{b.destination}}</td>
+            <td>{{ b.passport_number }}</td>
+            <td>{{ b.num_travelers }}</td>
+            <td>{{ b.phone_number }}</td>
+            <td>{{ b.customer_email }}</td>
+            
+            <td>
+                <a href="/edit/{{ b.booking_id }}">Edit</a> |
+                <a href="/delete/{{ b.booking_id }}">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+
+</table>
+{% endblock %}

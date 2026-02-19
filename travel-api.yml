@@ -1,0 +1,155 @@
+openapi: 3.0.0
+info:
+  title: "Travel Booking API"
+  description: "An API to manage travel holiday bookings"
+  version: "1.0.0"
+
+servers:
+  - url: "/api"
+
+components: #this part will validate the incoming requesets to make sure they are correct 
+  schemas: #describes what data should look like
+    Booking:
+      type: object
+      properties:   #the data types of your objects
+        booking_id:
+          type: integer
+        user_id:
+          type: integer
+        num_travelers:
+          type: integer
+        destination:
+          type: string
+        traveler_names:         
+          type: string
+        passport_number:         
+          type: string
+
+  
+  parameters:
+    booking_id:
+      name: booking_id
+      in: path
+      required: true
+      description: ID of the booking
+      schema:
+        type: integer
+
+paths:
+  /bookings:           #endpoint 1
+    get:             
+      operationId: travel.read_all
+      tags: [Bookings]
+      summary: Get all bookings
+      parameters:
+        - name: user_id
+          in: query
+          schema:
+            type: integer
+          required: false
+          description: Filter bookings by user ID
+      responses:
+        "200":  # status code for a sucessfull request
+          description: A list of bookings
+
+    post:            
+      operationId: travel.create
+      tags: [Bookings]
+      summary: Create a new booking
+      requestBody:
+        required: true
+        content:
+          application/json: #This tells the user to analyze the response as JSON
+            schema:
+             x-body-name: booking
+             $ref: "#/components/schemas/Booking"
+      responses:
+        "201":      #status code for a successful creation
+          description: Booking created
+
+
+  /bookings/{booking_id}: #endpoint 1.1
+    get:                
+      operationId: travel.read_one
+      tags: [Bookings]
+      summary: Get one booking
+      parameters:
+        - $ref: "#/components/parameters/booking_id"
+      responses:
+        "200":    # status code for a sucessfull request
+          description: Booking found
+        "404":
+          description: Booking not found
+
+    put:                
+      operationId: travel.update
+      tags: [Bookings]
+      summary: Update a booking
+      parameters:
+        - $ref: "#/components/parameters/booking_id"
+      requestBody:
+        required: true
+        content:
+          application/json: ##This tells the client to analyze the response as JSON
+            schema:
+              $ref: "#/components/schemas/Booking"
+              x-body-name: booking
+      responses:
+        "200":      # status code for a sucessfull request
+          description: Booking updated
+
+    delete:             
+      operationId: travel.delete
+      tags: [Bookings]
+      summary: Delete a booking
+      parameters:
+        - $ref: "#/components/parameters/booking_id"
+      responses:
+        "204": #successful request but, re response is empty coz data was deleted
+          description: Booking deleted
+
+  /register:
+    post:
+      operationId: travel.register_user
+      tags: [Users]
+      summary: Register a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                phone:
+                  type: string
+                password:
+                  type: string
+      responses:
+        "201":
+          description: User created
+
+  /login:
+    post:
+      operationId: travel.login_user
+      tags: [Users]
+      summary: Log in a user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        "200":
+          description: Login success with user_id
+        "401":
+          description: Invalid credentials

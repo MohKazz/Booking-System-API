@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Travel Booking App</title>
+    {% block style %}
+    <style>
+        body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background-color: #f8f9fa;
+        color: #333;
+    }
+    
+    h2 {
+        color: #3b1e06;
+        margin-bottom: 20px;
+    }
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    thead {
+        background-color: #c45b10a2;
+        color: #fff;
+    }
+    
+    th, td {
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+    
+    tbody tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+    
+    a,button,label {
+        color: #c45b10a2;
+        text-decoration: none;
+    }
+    
+   
+    
+    </style>
+    {% endblock %}
+</head>
+<body>
+    <header>
+        <h1>Travel Booking App</h1>
+        <nav>
+            {% if session.get("user_id") %}
+             <a href="/">Home</a> |
+             <a href="/new/">New Booking</a> |
+             <a href="/destinations/">Destinations</a> |
+             <a href="/profile">Profile</a> |
+             <a href="/logout">Logout</a>
+             {% else %}
+               <a href="/login">Login</a>
+             {% endif %}
+        </nav>
+        <hr>
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <ul class="flashes">
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+          </ul>
+        {% endif %}
+        {% endwith %}
+      
+    </main>
+</body>
+</html>

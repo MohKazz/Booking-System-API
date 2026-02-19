@@ -1,0 +1,31 @@
+version: '3.9'
+
+services: # defines the list fo containers to be run
+  api:
+    build: . # use the Dockerfile in the current directory to build the image
+    container_name: travel_api # name of the container for the API
+    ports:
+      - "82:82" #maps host port 82 to container port 82
+    command: python travel_api.py
+    volumes:
+      - app-data:/app # mounts the current directory to /app in the container
+
+  frontend:
+    build: .
+    container_name: travel_frontend # name of the container for the frontend
+    ports:
+      - "80:80"
+    command: python frontend_travel.py
+    volumes:
+      - app-data:/app
+    depends_on: # ensures that the frontend starts after the API is ready
+      - api
+    environment: # environment variables for the frontend
+      - API_BASE_URL=http://api:82/api # API base URL for the frontend to connect to the API
+
+    
+volumes:
+    app-data:
+      driver: local
+      
+

@@ -1,0 +1,35 @@
+version: '3.9'
+
+services:
+
+  api:
+    build:
+      context: . 
+      dockerfile: Dockerfile.api 
+    container_name: travel_api 
+    ports: 
+      - "82:82" 
+    environment: 
+      - FLASK_ENV=development 
+    command: python travel_api.py 
+    volumes: 
+      - app-data:/app
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    container_name: travel_frontend
+    ports:
+      - "80:80"
+    environment:
+      - API_BASE_URL=http://api:82/api
+    depends_on:
+      - api
+    command: python frontend_travel.py
+    volumes:
+      - app-data:/app
+
+volumes:
+  app-data:
+    driver: local

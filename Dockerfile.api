@@ -1,0 +1,17 @@
+# pulls this Base image
+FROM python:3.11-slim
+
+# Working directory
+WORKDIR /app
+
+# Copy all files
+COPY . .
+
+# Install dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Expose API port
+EXPOSE 82
+
+# Run API server
+CMD ["python", "travel_api.py"]

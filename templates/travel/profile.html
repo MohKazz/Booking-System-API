@@ -1,0 +1,25 @@
+{% extends "/travel/base.html" %}
+
+{% block content %}
+<h2>Profile</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Phone Number</th>
+            <th>Email</th>
+        </tr>
+    </thead>
+    <tbody>
+       {% if bookings %}
+    <tr>
+        <td>{{ bookings[0].customer_name }}</td>
+        <td>{{ bookings[0].phone_number }}</td>
+        <td>{{ bookings[0].customer_email }}</td>
+    </tr>
+{% endif %}
+    </tbody>
+
+</table>
+{% endblock %}

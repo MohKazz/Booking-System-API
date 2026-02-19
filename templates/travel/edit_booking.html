@@ -1,0 +1,32 @@
+{% extends "travel/base.html" %}
+
+{% block content %}
+<h2>Edit Booking</h2>
+
+<form method="POST">
+    <label >Traveler Name:</label><br>
+    <input type="text" name="traveler_names" value="{{ booking.traveler_names }}" required><br><br>
+
+    <label>Passport Number:</label><br>
+    <input type="text" name="passport_number" value="{{ booking.passport_number }}" required><br><br>
+
+    <label >Holiday Destination:</label><br>
+    <select name="destination" required>
+        <option value="{{ booking.destination }}"> {{ booking.destination }} </option>
+        <option value="Rome">Italy - Rome</option>
+        <option value="London">United Kingdom - London</option>
+        <option value="Amsterdam">Netherlands- Amsterdam</option>
+        <option value="Paris">France - Paris</option>
+        <option value="Barcelona">Spain - Barcelona</option>
+        <option value="Bangkok">Thiland - Bangkok</option>
+        <option value="Dubai" >UAE - Dubai</option>
+    </select><br><br>
+
+    <label >Number of Travelers:</label><br>
+    <input type="number" name="num_travelers" value="{{ booking.num_travelers }}" required><br><br>
+
+    
+    <button type="submit">Update Booking</button>
+
+</form>
+{% endblock %}
